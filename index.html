@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+
+  <head>
+    <link rel="stylesheet" href="./style.css" />
+    <meta charset="utf-8">
+    <title>To do</title>
+  </head>
+  
+  <body>
+
+    <div class="tasks__page">
+      <div class="tasks__container">
+
+        <header class="header">
+          <p class="header__date" id="tasksDate">Здесь будет дата</p>
+          <hr class="header__line"/>
+          <p class="header__count" id="tasksCount">Здесь будет количество задач</p>
+        </header>
+
+        <main class="main">
+
+          <div class="main__header">
+            <h1 class="main__title" id="tasksTitle">Тут будет заголовок</h1>
+
+            <div class="filter__container">
+              <button class="ellips__list" id="buttonEllipsis">
+                <div class="ellips"></div>
+                <div class="ellips"></div>
+                <div class="ellips"></div>
+              </button>
+              
+              <ul class="filter hidden" id="tasksFilters">
+                <li class="filter__item">
+                  <button class="filter__button" data-filter="completed">Completed</button>
+                </li>
+                <li class="filter__item">
+                  <button class="filter__button" data-filter="inProgress">In Progress</button>
+                </li>
+                <li class="filter__item">
+                  <button class="filter__button" data-filter="removed">Removed</button>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+
+          <ul class="tasks" id="tasks">
+            Здесь будут задачи
+          </ul>
+        </main>
+
+        <div class="footer" id="tasksNew">
+          <input type="text" class="footer__input" id="tasksInput" />
+          <button class="footer__add" id="tasksAdd">+</button>
+        </div>
+
+      </div>
+    </div>
+
+    <template id="tasksTemplate">
+      <li class="task">
+        <label class="task__text">
+          <input type="checkbox" id="taskCheckbox">
+        </label>
+        <button class="task__remove">+</button>
+      </li>
+    </template>
+
+    <script defer src="./index.js"></script>
+
+  </body>
+
+</html>
