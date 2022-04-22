@@ -1,3 +1,4 @@
+
 const tasksList = document.querySelector('#tasks');
 const tasksInput = document.querySelector('#tasksInput');
 const buttonAdd = document.querySelector('#tasksAdd');
@@ -12,99 +13,153 @@ const templateTask = document.querySelector('#tasksTemplate').content;
 
 // - - - - - DATA - - - - -
 
-let lastId = 0;
-let filter = 'all';
-const tasks = [
-    {
-        text: 'Build a modern To do app',
-        isComplited: false,
-        isRemoved: false,
-        id: lastId++,
-    },
-    {
-        text: 'Workout for 30 minutes at the gym',
-        isComplited: false,
-        isRemoved: false,
-        id: lastId++,
-    },
-    {
-        text: 'Buy groceries (milk, vegetables, fruits, fish)',
-        isComplited: false,
-        isRemoved: false,
-        id: lastId++,
-    },
-    {
-        text: 'Clean the house and backyard',
-        isComplited: false,
-        isRemoved: false,
-        id: lastId++,
-    },
-    {
-        text: 'Take the car to the autoshop for an oil change',
-        isComplited: false,
-        isRemoved: false,
-        id: lastId++,
-    },
-]
+let filter = 'inProgress';
+let tasks = [];
 const title = {
     'all': 'To do list',
-    'inProgress': 'In progress list',
+    'inProgress': 'To do list',
     'completed': 'Completed list',
     'removed': 'Removed list',
+}
+
+
+const getTasks = async () => {
+
+    tasks = await getTasksRequest();
+    updatePageTasks()
+}
+
+// - - - - - REQUEST FUNCTIONS - - - - -
+
+const requestUrl = 'https://web-todo-bek.herokuapp.com';
+
+async function getTasksRequest(){
+
+    let response = await fetch(requestUrl, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+        },
+    });
+
+    return await response.json();
+}
+
+async function addTaskRequest(task){
+
+    let response = await fetch(requestUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify(task)
+    });
+
+    return await response.json();
+}
+
+async function updateTaskRequest(_id, dataToUpdate) {
+
+    const response = await fetch(`${requestUrl}/${_id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify(dataToUpdate)
+    })
+
+    return await response.json();
+}
+
+async function deleteTaskRequest(_id){
+
+    return await fetch(`${requestUrl}/${_id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+        },
+    })
 }
 
 // - - - - - CODE - - - - -
 
 setDate();
-updatePageTasks();
+getTasks();
 
-// - - - - - LISTENERS - - - - -
+// - - - - - LIST FUNCTIONS - - - - -
 
-buttonEllipsis.addEventListener('click', function () {
+function findTaskInList(searchId) {
 
-    tasksFilters.classList.toggle('hidden');
-
-    if (tasksFilters.classList.contains('hidden')) {
-        setFilter('all');
-    }
-})
-
-buttonAdd.addEventListener('click', function () {
-
-    tasks.push({ text: tasksInput.value, isComplited: false, isRemoved: false, id: lastId++ });
-    tasksInput.value = '';
-    updatePageTasks();
-})
-
-tasksList.addEventListener('click', function (event) {
-
-    if (event.target.closest('li')) { // элемент, на котором событие сработало
-
-        if (event.target.classList.contains('task__remove')) {
-
-            deleteTask(event.target.closest('li'));
-            updatePageTasks();
-        }
-        else if (event.target.closest('label')) {
-
-            completeTask(event.target.closest('li'));
-        }
-    }
-});
-
-for (let filterButton of filterButtons) {
-
-    filterButton.addEventListener('click', function () {
-
-        filter = filterButton.dataset.filter;
-
-        updatePageTasks();
-    })
+    return  tasks.find(el => el._id === searchId);
 }
+
+function replaceTaskInList(replaceId, newTask) {
+
+    let taskIndexInList = tasks.findIndex(el => el._id === replaceId);
+    tasks[taskIndexInList] = newTask;
+}
+
+function deleteTaskFromList(deleteId) {
+
+    tasks = tasks.filter(el => el._id !== deleteId);
+}
+
 
 // - - - - - FUNCTIONS - - - - -
 
+async function completeTask(_id) {
+
+    let task = findTaskInList(_id);
+
+    const dataToUpdate = {
+        isCompleted: !task.isCompleted
+    }
+
+    const updatedTask = await updateTaskRequest(_id, dataToUpdate);
+
+    replaceTaskInList(_id, updatedTask);
+    updatePageTasks();
+}
+
+async function deleteTaskForever (_id) {
+
+    const response = await deleteTaskRequest(_id)
+
+    if (response.ok) {
+        deleteTaskFromList(_id);
+        updatePageTasks();
+    }
+    else{
+        console.log('Server error');
+    }
+}
+
+async function deleteTask(_id) {
+
+    const dataToUpdate = {
+        isRemoved: true
+    }
+    const updatedTask = await updateTaskRequest(_id, dataToUpdate);
+
+    replaceTaskInList(_id, updatedTask);
+    updatePageTasks();
+}
+
+async function addTask(text){
+
+    let task = { text: text, isCompleted: false, isRemoved: false };
+
+    const newTask = await addTaskRequest(task);
+
+    tasks.push(newTask);
+    tasksInput.value = '';
+    updatePageTasks();
+}
+
+
 function updatePageTasks() {
+
+    console.log(tasks)
 
     while (tasksList.firstChild) {
         tasksList.removeChild(tasksList.firstChild);
@@ -112,19 +167,11 @@ function updatePageTasks() {
 
     let count = 0;
 
-    if (filter === 'all') {
-        for (let task of tasks) {
-            if (!task.isRemoved) {
-                addTaskToPage(task.text, task.isComplited, task.isRemoved, task.id);
-                count++;
-            }
-        }
-    }
-    else if (filter === 'inProgress') {
+    if (filter === 'inProgress') {
 
         for (let task of tasks) {
-            if (!task.isComplited && !task.isRemoved) {
-                addTaskToPage(task.text, task.isComplited, task.isRemoved, task.id);
+            if (!task.isCompleted && !task.isRemoved) {
+                addTaskToPage(task.text, task.isCompleted, task.isRemoved, task._id);
                 count++;
             }
         }
@@ -133,7 +180,7 @@ function updatePageTasks() {
 
         for (let task of tasks) {
             if (task.isRemoved) {
-                addTaskToPage(task.text, task.isComplited, task.isRemoved, task.id);
+                addTaskToPage(task.text, task.isCompleted, task.isRemoved, task._id);
                 count++;
             }
         }
@@ -141,8 +188,8 @@ function updatePageTasks() {
     else if (filter === 'completed') {
 
         for (let task of tasks) {
-            if (task.isComplited && !task.isRemoved) {
-                addTaskToPage(task.text, task.isComplited, task.isRemoved, task.id);
+            if (task.isCompleted && !task.isRemoved) {
+                addTaskToPage(task.text, task.isCompleted, task.isRemoved, task._id);
                 count++;
             }
         }
@@ -153,12 +200,12 @@ function updatePageTasks() {
     toggleNew();
 }
 
-function addTaskToPage(text, isComplited, isRemoved, id) {
+function addTaskToPage(text, isCompleted, isRemoved, id) {
 
     const newElement = templateTask.cloneNode(true);
     newElement.querySelector('.task__text').append(text);
 
-    if (isComplited) {
+    if (isCompleted) {
         newElement.querySelector('#taskCheckbox').checked = true;
     }
 
@@ -169,47 +216,12 @@ function addTaskToPage(text, isComplited, isRemoved, id) {
 
 function toggleNew() {
 
-    if (filter === 'all') {
+    if (filter === 'inProgress') {
         footer.classList.remove('hidden');
     }
     else {
         footer.classList.add('hidden');
     }
-}
-
-function findTask(searchId) {
-
-    for (let task of tasks) {
-        if (task.id === Number(searchId)) {
-            return task;
-        }
-    }
-}
-
-function completeTask(element) {
-
-    const completeTaskId = element.id;
-
-    const task = findTask(completeTaskId);
-    task.isComplited = !task.isComplited;
-
-    updatePageTasks();
-}
-
-function deleteTask(element) {
-
-    const removedTaskId = element.id;
-
-    const task = findTask(removedTaskId);
-    task.isRemoved = !task.isRemoved;
-
-    updatePageTasks();
-}
-
-function setFilter(newFilter) {
-
-    filter = newFilter;
-    updatePageTasks();
 }
 
 function setTitle() {
@@ -239,3 +251,61 @@ function setDate() {
 
     tasksDate.textContent = dayOfWeek + ', ' + mounth + ' ' + day + ', ' + year;
 }
+
+// - - - - - LISTENERS - - - - -
+
+buttonEllipsis.addEventListener('click', function () {
+
+    tasksFilters.classList.toggle('hidden');
+})
+
+buttonAdd.addEventListener('click', async function () {
+
+    const text = tasksInput.value;
+
+    addTask(text);
+})
+
+tasksInput.addEventListener('keydown', function (event) {
+
+    if (event.keyCode === 13) {
+        buttonAdd.click();
+    }
+
+});
+
+tasksList.addEventListener('click', function (event) {
+
+    if (event.target.closest('li')) { // элемент, на котором событие сработало
+
+        if (event.target.classList.contains('task__remove')) {
+
+            if (filter === 'removed') {
+                deleteTaskForever(event.target.closest('li').id)
+            }
+            else{
+                deleteTask(event.target.closest('li').id);
+            }
+        }
+        else if (event.target.closest('label')) {
+
+            completeTask(event.target.closest('li').id);
+        }
+    }
+});
+
+for (let filterButton of filterButtons) {
+
+    filterButton.addEventListener('click', function () {
+
+        filter = filterButton.dataset.filter;
+        updatePageTasks();
+    })
+}
+
+
+
+
+
+
+
