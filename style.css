@@ -10,58 +10,58 @@
 
 .header {
     color: #FFFFFF;
-    min-height: 64px;
+    min-height: 128px;
     background: #9288FF;
-    box-shadow: 0px 4px 4px #5D57A1;
-    border-radius: 5px 5px 40px 60px;
-    padding-top: 6px;
-    padding-left: 6px;
-    padding-right: 33px;
-    text-align: right;
+    box-shadow: 0px 8px 8px #5D57A1;
+    border-radius: 10px 10px 80px 120px;
+    padding-top: 12px;
+    padding-left: 12px;
+    padding-right: 66px;
+    text-align: right;     /* Выравнивание текста по правому краю */
 }
 
 .header__date {
-    font-size: 22px;
-    line-height: 30px;
+    font-size: 44px;
+    line-height: 60px;    /* величину пространства между строками */
 }
 
 .header__line {
     border: none;
-    height: 1px;
-    width: 48%;
-    right: 33px;
+    height: 2px;
+    width: 57%;
+    right: 66px;
     background-color: #FFFFFF;
     margin-left: auto;
 }
 
 .header__count {
-    font-size: 20px;
-    text-align: right;
+    font-size: 40px;
+    text-align: right;     /* Выравнивание текста по правому краю */
 }
 
 /* - - - - - - - -  */
 
 .main {
-    padding-top: 23px;
-    padding-bottom: 12px;
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-top: 46px;
+    padding-bottom: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
 }
 
 .main__title {
-    font-size: 18px;
-    line-height: 22px;
+    font-size: 36px;
+    line-height: 44px;    /* управляет высотой строки или, если точнее, межстрочным интервалом. */
     color: #3B3482;
     font-weight: 300;
 }
 
 .main__header {
-    max-width: 110px;
+    max-width: 220px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #3B3482;
-    padding-bottom: 4px;
+    justify-content: space-between;     /* задаёт одинаковое расстояние между блоками, но не между контейнером и блоками */
+    align-items: center;      /* выравнивает элементы как и justify-content, но в перпендикулярном направлении */
+    border-bottom: 2px solid #3B3482;
+    padding-bottom: 8px;
 
 }
 
@@ -69,31 +69,31 @@
 
 .ellips__list {
     background-color: #F6F5FF;
-    box-shadow: inset 1px 4px 4px rgba(146, 136, 255, 0.42);
-    border-radius: 4px;
-    width: 15px;
-    height: 11px;
+    box-shadow: inset 2px 8px 8px rgba(146, 136, 255, 0.42);
+    border-radius: 8px;
+    width: 30px;
+    height: 22px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 2px;
+    align-items: center;   /* выравнивает элементы как и justify-content, но в перпендикулярном направлении */
+    padding: 4px;
     border: none;
 }
 
 .ellips__list:hover {
-    box-shadow: inset 1px 4px 4px rgba(106, 93, 255, 0.42);
+    box-shadow: inset 2px 8px 8px rgba(106, 93, 255, 0.42);
 }
 
 
 .ellips__list:active {
-    box-shadow: inset 1px 4px 4px rgba(65, 47, 255, 0.42);
+    box-shadow: inset 2px 8px 8px rgba(65, 47, 255, 0.42);
 }
 
 .ellips {
-    width: 3px;
-    height: 3px;
+    width: 6px;
+    height: 6px;
     background-color: #302795;
-    border-radius: 1.5px;
+    border-radius: 3px;
 
 }
 
@@ -105,24 +105,24 @@
     list-style-type: none;
     position: absolute;
     background: #CDC9FF;
-    box-shadow: 0px 4px 6px #7069B6, inset -6px -6px 12px #FFFFFF;
-    border-radius: 7px;
-    min-width: 53px;
-    min-height: 47px;
-    top: -21px;
+    box-shadow: 0px 8px 12px #7069B6, inset -12px -12px 24px #FFFFFF;
+    border-radius: 14px;
+    min-width: 106px;
+    min-height: 94px;
+    top: -42px;
     left: 100%;
 }
 
 .filter__item {
-    font-size: 10px;
-    padding-left: 7px;
-    padding-right: 7px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    font-size: 20px;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .filter__item:nth-child(1), .filter__item:nth-child(2) {
-    border-bottom: 1px solid #1A145B;
+    border-bottom: 2px solid #1A145B;
 }
 
 .filter__button {
@@ -131,7 +131,7 @@
     margin: 0;
     background-color: inherit;
     font-size: inherit;
-    line-height: 12px;
+    line-height: 24px;     /* управляет высотой строки или, если точнее, межстрочным интервалом. */
     color: #181071;
 }
 
@@ -153,55 +153,63 @@
 .tasks {
     list-style-type: none;
     padding: 0;
-    padding-bottom: 5px;
-    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 
     color: #5C5959;
-    font-size: 13px;
-    line-height: 16px;
+    font-size: 26px;
+    line-height: 32px;     /* управляет высотой строки или, если точнее, межстрочным интервалом. */
 }
 
 .tasks__page {
     background-color: #eeeeee;
-    padding: 5px;
+    padding: 10px;
     min-height: 100vh;
 }
 
 .tasks__container {
     background-color: #FFFFFF;
-    max-width: 219px;
-    min-height: 316px;
+    width: 430px;
+    min-height: 632px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
+    margin-top: 40px;
     position: relative;
-    padding-bottom: 60px;
-    border-radius: 5px;
+    padding-bottom: 120px;
+    border-radius: 10px;
 }
 
 .task {
+
     width: 100%;
-    min-height: 25px;
-    border-radius: 5px;
-    padding: 5px;
+    min-height: 50px;
+    border-radius: 10px;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center;   /* выравнивает элементы как и justify-content, но в перпендикулярном направлении */
 }
+.task__check {
+    font-size: 30px;
+    width: 20px;
+    height: 20px;
+
+}
+
 
 .task label {
     display: flex;
-    align-items: center;
+    align-items: center;    /* выравнивает элементы как и justify-content, но в перпендикулярном направлении */
 }
 
 .task label input {
-    margin-top: 1px;
-    margin-right: 5px;
+    margin-top: 2px;
+    margin-right: 10px;
 }
 
 .task:hover {
     background: #9288FF;
-    box-shadow: 1px 4px 8px #544CA8;
+    box-shadow: 2px 8px 16px #544CA8;
     color: #FFFFFF;
 }
 
@@ -212,28 +220,28 @@
 .task__remove {
     cursor: pointer;
     background-color: #9288FF;
-    min-width: 11px;
+    min-width: 22px;
     padding: 0;
-    max-height: 11px;
-    border-radius: 5.5px;
-    border: 1px solid #FAC6FF;
-    font-family: Roboto;
+    max-height: 22px;
+    border-radius: 11px;
+    border: 2px solid #FAC6FF;
+    font-family: Roboto, serif;
     transform: rotate(-45deg);
     justify-content: center;
-    align-items: center;
-    font-size: 11px;
+    align-items: center;     /* выравнивает элементы как и justify-content, но в перпендикулярном направлении */
+    font-size: 22px;
     color: #FAC6FF;
-    line-height: 13px;
+    line-height: 26px; /* управляет высотой строки или, если точнее, межстрочным интервалом. */
     display: none;
 }
 
 .task__remove:hover {
-    border: 1px solid #f9b3ff;
+    border: 2px solid #f9b3ff;
     color: #f9b3ff;
 }
 
 .task__remove:active {
-    border: 1px solid #f7a2ff;
+    border: 2px solid #f7a2ff;
     color: #f7a2ff;
 }
 
@@ -242,29 +250,29 @@
 .footer {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-top: 5px;
-    gap: 10px;
+    align-items: center;     /* выравнивает элементы как и justify-content, но в перпендикулярном направлении */
+    margin-top: 10px;
+    gap: 20px;
     position: absolute;
     bottom: 0;
-    width: 219px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    width: 439px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 20px;
+    padding-top: 20px;
 }
 
 .footer__add {
     cursor: pointer;
     color: #302795;
-    font-size: 36px;
-    line-height: 42px;
-    font-family: Roboto;
+    font-size: 72px;
+    line-height: 84px;      /* управляет высотой строки или, если точнее, межстрочным интервалом. */
+    font-family: Roboto, serif;
     background: rgba(146, 136, 255, 0.22);
-    box-shadow: 1px 3px 4px #6F68B6;
-    min-width: 48px;
-    height: 48px;
-    border-radius: 24px;
+    box-shadow: 2px 6px 8px #6F68B6;
+    min-width: 96px;
+    height: 96px;
+    border-radius: 48px;
     border: 0;
     padding: 0;
 }
@@ -278,6 +286,9 @@
 }
 
 .footer__input {
+    font-size: 28px;
+    padding: 10px;
+    height: 50px;
     width: 100%;
 }
 
@@ -285,4 +296,11 @@
 
 .hidden {
     display: none;
+}
+
+
+@media (max-width: 500px) {
+    .tasks__page{
+        background: #FFFFFF;
+    }
 }
