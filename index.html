@@ -4,6 +4,7 @@
   <head>
     <link rel="stylesheet" href="./style.css" />
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>To do</title>
   </head>
   
@@ -21,7 +22,7 @@
         <main class="main">
 
           <div class="main__header">
-            <h1 class="main__title" id="tasksTitle">Тут будет заголовок</h1>
+            <h1 class="main__title" id="tasksTitle">Тут будет заголовок, подождите немного)</h1>
 
             <div class="filter__container">
               <button class="ellips__list" id="buttonEllipsis">
@@ -51,7 +52,7 @@
         </main>
 
         <div class="footer" id="tasksNew">
-          <input type="text" class="footer__input" id="tasksInput" />
+          <input type="text" class="footer__input" id="tasksInput" placeholder="Write something" />
           <button class="footer__add" id="tasksAdd">+</button>
         </div>
 
@@ -59,9 +60,9 @@
     </div>
 
     <template id="tasksTemplate">
-      <li class="task">
+      <li class="task" id="">
         <label class="task__text">
-          <input type="checkbox" id="taskCheckbox">
+          <input type="checkbox" class="task__check" id="taskCheckbox">
         </label>
         <button class="task__remove">+</button>
       </li>
